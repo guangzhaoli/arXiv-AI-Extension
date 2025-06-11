@@ -10,7 +10,9 @@
 - **Automatic PDF Handling** – paste an arXiv ID or URL, the extension downloads the PDF and uploads it for you.  
 - **Smart Cache** – downloaded papers are cached for **7 days** to avoid redundant traffic.  
 - **Live Progress Bar** – see real-time download & upload progress.  
-- **Multi-Platform Support** – works on ChatGPT, Google Gemini and AI Studio.  
+- **Multi-Platform Support** –  
+  • **Chromium browsers**: ChatGPT, Google Gemini, AI Studio  
+  • **Firefox**: currently supports ChatGPT only (see details below)
 
 ---
 
@@ -20,6 +22,8 @@
 | ChatGPT  | `chat.openai.com`, `chatgpt.com` |
 | Gemini   | `gemini.google.com` |
 | AI Studio| `aistudio.google.com` |
+
+> ⚠️ **Firefox limitation:** Gemini and AI Studio hide their file-upload inputs inside a *closed Shadow DOM*, and Firefox’s security model blocks content scripts from creating `DataTransfer` objects that contain files. Automatic upload therefore works only in Chromium-based browsers; on Firefox the extension currently supports ChatGPT only.
 
 ---
 
@@ -34,7 +38,7 @@
 ### Firefox
 1. Open `about:debugging#/runtime/this-firefox`.  
 2. Click **Load Temporary Add-on…**.  
-3. Select `arxiv-ai-extension/manifest_v2.json`.  
+3. Select `arxiv-ai-extension/manifest_firefox.json`.  
 
 > Permanent distribution on AMO / Chrome Web Store will be available soon.
 
