@@ -16,6 +16,19 @@
 
 ---
 
+## 🎬 Demo
+
+See the extension in action:
+
+<video width="800" controls>
+  <source src="demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+*The demo shows how to use the `/arxiv` command to quickly import arXiv papers into ChatGPT with automatic PDF download and upload.*
+
+---
+
 ## 🌍 Supported Sites
 | Platform | Domain |
 |----------|--------|
