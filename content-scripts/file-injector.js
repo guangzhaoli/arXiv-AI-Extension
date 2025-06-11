@@ -1,5 +1,5 @@
 /**
- * File Injector - Handles uploading PDF files to AI chat platforms via drag & drop simulation
+ * File Injector - Handles uploading PDF files to AI chat platforms (file-input first, drag-and-drop as fallback)
  */
 class FileInjector {
   constructor(siteConfigs, progressTracker = null) {
@@ -20,7 +20,7 @@ class FileInjector {
       throw new Error('Current site not supported');
     }
 
-    console.log(`Injecting file ${filename} to ${config.name} via drag & drop`);
+    console.log(`Injecting file ${filename} to ${config.name} (upload sequence)`);
     
     try {
       // Don't start new progress, continue from current state
@@ -227,8 +227,8 @@ class FileInjector {
     }
     
     // Step 5: Fallback to drag & drop
-    console.log('Trying drag & drop method for Gemini...');
-    this.progressTracker.updateProgress(70, 'Trying drag & drop...');
+    console.log('Retrying upload via file input (Gemini fallback)...');
+    this.progressTracker.updateProgress(70, 'Retrying file-input upload...');
     
     await this.simulateGeminiDragDrop(inputElement, file);
     
@@ -394,8 +394,8 @@ class FileInjector {
     }
     
     // Step 4: Fallback to drag & drop
-    console.log('Trying drag & drop method for AI Studio...');
-    this.progressTracker.updateProgress(70, 'Trying drag & drop...');
+    console.log('Retrying upload via file input (AI Studio fallback)...');
+    this.progressTracker.updateProgress(70, 'Retrying file-input upload...');
     
     await this.simulateAIStudioDragDrop(inputElement, file);
     

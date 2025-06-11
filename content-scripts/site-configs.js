@@ -77,7 +77,7 @@ class SiteConfigs {
           progressContainer: '.response-container, .conversation-container, main',
           sendButton: 'button[aria-label*="Send"], [data-testid="send-button"]'
         },
-        uploadMethod: 'dragDrop',
+        uploadMethod: 'fileInput',
         triggerCommand: '/arxiv',
         // Special handling for Gemini
         specialHandling: {
@@ -101,7 +101,7 @@ class SiteConfigs {
           progressContainer: '.chat-container, .conversation, main',
           sendButton: 'button[aria-label*="Send"], [data-testid="send-button"], button[type="submit"]'
         },
-        uploadMethod: 'dragDrop',
+        uploadMethod: 'fileInput',
         triggerCommand: '/arxiv',
         // Special handling for AI Studio
         specialHandling: {
