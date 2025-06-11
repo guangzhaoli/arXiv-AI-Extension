@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>arXiv AI Extension</title>
+  <style>
+    body {
+      width: 320px;
+      padding: 0;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #ffffff;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .header p {
+      margin: 5px 0 0 0;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+    
+    .content {
+      padding: 20px;
+    }
+    
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+      padding: 12px;
+      background: #f8fafc;
+      border-radius: 8px;
+      border-left: 4px solid #10b981;
+    }
+    
+    .status.inactive {
+      border-left-color: #6b7280;
+    }
+    
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+    
+    .status.inactive .status-dot {
+      background: #6b7280;
+    }
+    
+    .status-text {
+      font-size: 14px;
+      color: #374151;
+      font-weight: 500;
+    }
+    
+    .stats {
+      margin-bottom: 20px;
+    }
+    
+    .stat-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 14px;
+    }
+    
+    .stat-item:last-child {
+      border-bottom: none;
+    }
+    
+    .stat-label {
+      color: #6b7280;
+    }
+    
+    .stat-value {
+      color: #111827;
+      font-weight: 500;
+    }
+    
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    
+    .btn-primary {
+      background: #3b82f6;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #2563eb;
+    }
+    
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+    
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+    
+    .instructions {
+      margin-top: 15px;
+      padding: 12px;
+      background: #fef7ff;
+      border-radius: 6px;
+      border: 1px solid #e879f9;
+    }
+    
+    .instructions h3 {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      color: #a21caf;
+    }
+    
+    .instructions p {
+      margin: 0;
+      font-size: 12px;
+      color: #86198f;
+      line-height: 1.4;
+    }
+    
+    .instructions code {
+      background: rgba(168, 85, 247, 0.1);
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+    
+    .footer {
+      padding: 15px 20px;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+      background: #f9fafb;
+    }
+    
+    .footer a {
+      color: #6b7280;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    
+    .footer a:hover {
+      color: #374151;
+    }
+    
+    .loading {
+      text-align: center;
+      color: #6b7280;
+      font-size: 14px;
+      padding: 20px;
+    }
+    
+    .error {
+      color: #dc2626;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>arXiv AI Extension</h1>
+    <p>Import research papers instantly</p>
+  </div>
+  
+  <div class="content">
+    <div id="loading" class="loading">
+      Loading extension status...
+    </div>
+    
+    <div id="main-content" style="display: none;">
+      <div id="status" class="status">
+        <div class="status-dot"></div>
+        <div class="status-text">Ready</div>
+      </div>
+      
+      <div class="stats">
+        <div class="stat-item">
+          <span class="stat-label">Current Site:</span>
+          <span class="stat-value" id="current-site">Unknown</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Cached Papers:</span>
+          <span class="stat-value" id="cache-count">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Cache Size:</span>
+          <span class="stat-value" id="cache-size">0 MB</span>
+        </div>
+      </div>
+      
+      <div class="buttons">
+        <button id="clear-cache" class="btn btn-secondary">Clear Cache</button>
+        <button id="test-import" class="btn btn-primary">Test Import</button>
+      </div>
+      
+      <div class="instructions">
+        <h3>How to use:</h3>
+        <p>
+          1. Go to ChatGPT, Gemini, or AI Studio<br>
+          2. Type <code>/arxiv</code> in the chat box<br>
+          3. Enter paper URL or ID (e.g., <code>2506.05046</code>)<br>
+          4. Paper will be automatically uploaded!
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <a href="https://github.com" target="_blank">View on GitHub</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

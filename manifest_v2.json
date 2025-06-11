@@ -1,0 +1,56 @@
+{
+  "manifest_version": 2,
+  "name": "arXiv AI Extension",
+  "version": "1.0.0",
+  "description": "Easily import arXiv papers into AI chat platforms with /arxiv command",
+  
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "notifications",
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*",
+    "https://gemini.google.com/*",
+    "https://aistudio.google.com/*",
+    "https://arxiv.org/*"
+  ],
+  
+  "background": {
+    "scripts": ["background/service-worker.js"],
+    "persistent": false
+  },
+  
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://gemini.google.com/*",
+        "https://aistudio.google.com/*"
+      ],
+      "js": [
+        "utils/arxiv-parser.js",
+        "utils/cache-manager.js",
+        "utils/progress-tracker.js",
+        "content-scripts/site-configs.js",
+        "content-scripts/file-injector.js",
+        "content-scripts/chat-detector.js",
+        "content-scripts/main.js"
+      ],
+      "css": ["components/arxiv-modal.css"],
+      "run_at": "document_end"
+    }
+  ],
+  
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  
+  "browser_action": {
+    "default_popup": "components/popup.html",
+    "default_title": "arXiv AI Extension"
+  }
+}

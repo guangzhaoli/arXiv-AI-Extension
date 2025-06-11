@@ -1,0 +1,671 @@
+/**
+ * Styles for arXiv Modal and Progress Tracker - OpenAI Style
+ */
+
+/* Minimalist Variables - Black, White, Gray Only */
+:root {
+  --arxiv-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --arxiv-surface: #ffffff;
+  --arxiv-surface-secondary: #fafafa;
+  --arxiv-border: #e5e5e5;
+  --arxiv-text-primary: #000000;
+  --arxiv-text-secondary: #666666;
+  --arxiv-text-tertiary: #cccccc;
+  --arxiv-radius: 12px;
+  --arxiv-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme - Specific gray values */
+[data-theme="dark"] {
+  --arxiv-surface: #303030;           /* 48,48,48 */
+  --arxiv-surface-secondary: #212121; /* 33,33,33 */
+  --arxiv-surface-tertiary: #181818;  /* 24,24,24 */
+  --arxiv-border: #424242;
+  --arxiv-text-primary: #ffffff;
+  --arxiv-text-secondary: #cccccc;
+  --arxiv-text-tertiary: #cccccc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --arxiv-surface: #303030;           /* 48,48,48 */
+    --arxiv-surface-secondary: #212121; /* 33,33,33 */
+    --arxiv-surface-tertiary: #181818;  /* 24,24,24 */
+    --arxiv-border: #424242;
+    --arxiv-text-primary: #ffffff;
+    --arxiv-text-secondary: #cccccc;
+    --arxiv-text-tertiary: #cccccc;
+  }
+}
+
+/* Modal styles - ChatGPT like */
+.arxiv-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  font-family: var(--arxiv-font-sans);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.arxiv-modal.visible {
+  display: flex;
+  animation: arxiv-modal-backdrop-appear 0.15s ease-out;
+}
+
+.arxiv-modal-content {
+  background: var(--arxiv-surface);
+  border-radius: var(--arxiv-radius);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  max-width: 550px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: arxiv-modal-appear 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+@keyframes arxiv-modal-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes arxiv-modal-backdrop-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.arxiv-modal-header {
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid var(--arxiv-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--arxiv-surface);
+}
+
+.arxiv-modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--arxiv-text-primary);
+  line-height: 1.4;
+}
+
+.arxiv-modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--arxiv-text-tertiary);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.arxiv-modal-close:hover {
+  background-color: var(--arxiv-surface-secondary);
+  color: var(--arxiv-text-primary);
+}
+
+.arxiv-modal-body {
+  padding: 24px;
+}
+
+.arxiv-modal-body label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 500;
+  color: var(--arxiv-text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.arxiv-modal-body input[type="text"] {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--arxiv-border);
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: var(--arxiv-font-sans);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  background: var(--arxiv-surface);
+  color: var(--arxiv-text-primary);
+  line-height: 1.5;
+}
+
+.arxiv-modal-body input[type="text"]:hover {
+  border-color: var(--arxiv-text-secondary);
+}
+
+.arxiv-modal-body input[type="text"]:focus {
+  outline: none;
+  border-color: var(--arxiv-text-primary);
+  box-shadow: 0 0 0 1px var(--arxiv-text-primary);
+}
+
+.arxiv-modal-body input[type="text"]::placeholder {
+  color: var(--arxiv-text-tertiary);
+  opacity: 0.8;
+}
+
+.arxiv-examples {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--arxiv-surface-secondary);
+  border-radius: 8px;
+}
+
+.arxiv-examples small {
+  color: var(--arxiv-text-secondary);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.arxiv-examples ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.arxiv-examples li {
+  margin-bottom: 8px;
+  color: var(--arxiv-text-secondary);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.arxiv-examples code {
+  background: var(--arxiv-surface);
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+  font-size: 12px;
+  color: var(--arxiv-text-primary);
+}
+
+.arxiv-modal-footer {
+  padding: 20px 24px 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background: var(--arxiv-surface);
+  border-top: 1px solid var(--arxiv-border);
+}
+
+.arxiv-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  line-height: 1.4;
+  font-family: var(--arxiv-font-sans);
+  position: relative;
+}
+
+.arxiv-btn-secondary {
+  background: transparent;
+  color: var(--arxiv-text-primary);
+  border: 1px solid var(--arxiv-border);
+}
+
+.arxiv-btn-secondary:hover {
+  background: var(--arxiv-surface-secondary);
+  border-color: var(--arxiv-text-secondary);
+}
+
+.arxiv-btn-primary {
+  background: var(--arxiv-text-primary);
+  color: var(--arxiv-surface);
+  border: 1px solid var(--arxiv-text-primary);
+}
+
+.arxiv-btn-primary:hover {
+  background: var(--arxiv-text-secondary);
+  border-color: var(--arxiv-text-secondary);
+}
+
+.arxiv-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.arxiv-btn:active {
+  transform: scale(0.98);
+}
+
+/* Error message styles */
+.arxiv-error {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--arxiv-surface-secondary);
+  border: 1px solid var(--arxiv-border);
+  border-radius: 8px;
+  color: var(--arxiv-text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  animation: arxiv-error-appear 0.2s ease-out;
+  position: relative;
+  line-height: 1.4;
+}
+
+.arxiv-error::before {
+  content: "!";
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+@keyframes arxiv-error-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Progress tracker styles - Enhanced visibility for ChatGPT */
+.arxiv-progress-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: var(--arxiv-radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  min-width: 300px;
+  max-width: 350px;
+  z-index: 10001;
+  animation: arxiv-progress-appear 0.25s ease-out;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  font-family: var(--arxiv-font-sans);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.arxiv-progress-container.visible {
+  display: block;
+}
+
+@keyframes arxiv-progress-appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.progress-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progress-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.3px;
+}
+
+.progress-text::before {
+  content: "⚡";
+  font-size: 14px;
+  color: #4ade80;
+  animation: arxiv-pulse 1.5s infinite;
+  filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.4));
+}
+
+@keyframes arxiv-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.progress-bar-container {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  height: 6px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #4ade80, #22c55e);
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease;
+  border-radius: 4px;
+  position: relative;
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+  animation: arxiv-progress-shimmer 2s infinite;
+}
+
+@keyframes arxiv-progress-shimmer {
+  0% {
+    background: linear-gradient(90deg, #4ade80, #22c55e);
+  }
+  50% {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+  }
+  100% {
+    background: linear-gradient(90deg, #4ade80, #22c55e);
+  }
+}
+
+/* Progress completion state */
+.progress-bar.complete {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.6);
+  animation: none;
+}
+
+/* Progress error state */
+.progress-bar.error {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+  animation: none;
+}
+
+.progress-text.error {
+  color: #fecaca;
+  text-shadow: 0 1px 2px rgba(239, 68, 68, 0.5);
+}
+
+.progress-text.error::before {
+  content: "❌";
+  animation: none;
+  color: #ef4444;
+  filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.4));
+}
+
+/* Progress success state */
+.progress-text.success {
+  color: #bbf7d0;
+  text-shadow: 0 1px 2px rgba(34, 197, 94, 0.5);
+}
+
+.progress-text.success::before {
+  content: "✅";
+  animation: none;
+  color: #22c55e;
+  filter: drop-shadow(0 0 4px rgba(34, 197, 94, 0.4));
+}
+
+/* Dark mode support - Use specified gray colors */
+@media (prefers-color-scheme: dark) {
+  .arxiv-modal-content {
+    background: #303030; /* 48,48,48 */
+    color: #ffffff;
+    border: 1px solid #424242;
+  }
+  
+  .arxiv-modal-header {
+    background: #212121; /* 33,33,33 */
+    border-bottom-color: #424242;
+  }
+  
+  .arxiv-modal-header h3 {
+    color: #ffffff;
+  }
+  
+  .arxiv-modal-close {
+    color: #cccccc;
+  }
+  
+  .arxiv-modal-close:hover {
+    background-color: #424242;
+    color: #ffffff;
+  }
+  
+  .arxiv-modal-body {
+    background: #303030; /* 48,48,48 */
+  }
+  
+  .arxiv-modal-body label {
+    color: #ffffff;
+  }
+  
+  .arxiv-modal-body input[type="text"] {
+    background-color: #181818; /* 24,24,24 */
+    border-color: #424242;
+    color: #ffffff;
+  }
+  
+  .arxiv-modal-body input[type="text"]:hover {
+    border-color: #666666;
+  }
+  
+  .arxiv-modal-body input[type="text"]:focus {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 1px #ffffff;
+    background-color: #181818;
+  }
+  
+  .arxiv-modal-body input[type="text"]::placeholder {
+    color: #999999;
+  }
+  
+  .arxiv-examples {
+    background-color: #212121; /* 33,33,33 */
+    border: none;
+  }
+  
+  .arxiv-examples code {
+    background-color: #303030;
+    border: 1px solid #424242;
+    color: #ffffff;
+  }
+  
+  .arxiv-modal-footer {
+    background: #303030; /* 48,48,48 */
+    border-top-color: #424242;
+  }
+  
+  .arxiv-btn-secondary {
+    background-color: #424242;
+    color: #ffffff;
+    border-color: #424242;
+  }
+  
+  .arxiv-btn-secondary:hover {
+    background-color: #525252;
+    border-color: #525252;
+  }
+  
+  .arxiv-btn-primary {
+    background: #ffffff;
+    color: #181818;
+    border-color: #ffffff;
+  }
+  
+  .arxiv-btn-primary:hover {
+    background: #e0e0e0;
+    border-color: #e0e0e0;
+  }
+  
+  .arxiv-error {
+    background: #212121;
+    border-color: #424242;
+    color: #ffffff;
+  }
+  
+  /* Progress container now uses fixed dark styling for maximum visibility */
+  .arxiv-progress-container {
+    background: rgba(0, 0, 0, 0.95) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .progress-text {
+    color: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  .progress-bar-container {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .progress-bar {
+    background: linear-gradient(90deg, #4ade80, #22c55e) !important;
+    box-shadow: 0 0 12px rgba(74, 222, 128, 0.6) !important;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .arxiv-modal-content {
+    width: 95%;
+    margin: 20px;
+  }
+  
+  .arxiv-modal-header,
+  .arxiv-modal-body,
+  .arxiv-modal-footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .arxiv-progress-container {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    max-width: none;
+    padding: 16px;
+  }
+  
+  .progress-text {
+    font-size: 14px;
+  }
+}
+
+/* Force high contrast for progress in all chat interfaces */
+body[class*="dark"] .arxiv-progress-container,
+.dark .arxiv-progress-container,
+[data-theme="dark"] .arxiv-progress-container {
+  background: rgba(0, 0, 0, 0.95) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) !important;
+}
+
+body[class*="dark"] .progress-text,
+.dark .progress-text,
+[data-theme="dark"] .progress-text {
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9) !important;
+  font-weight: 700 !important;
+}
+
+/* Enhanced visibility for ChatGPT specifically */
+div[class*="conversation"] .arxiv-progress-container,
+div[id*="chat"] .arxiv-progress-container,
+.chat-container .arxiv-progress-container {
+  background: rgba(0, 0, 0, 0.98) !important;
+  border: 3px solid rgba(74, 222, 128, 0.4) !important;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+div[class*="conversation"] .progress-text,
+div[id*="chat"] .progress-text,
+.chat-container .progress-text {
+  color: #ffffff !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 1) !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+}
+
+/* Accessibility improvements */
+.arxiv-modal:focus-within .arxiv-modal-content {
+  outline: none; /* 移除外部边框高亮 */
+}
+
+.arxiv-btn:focus {
+  outline: none; /* 移除按钮聚焦边框 */
+}
+
+.arxiv-modal-body input[type="text"]:focus {
+  outline: none; /* Already handled by border-color and box-shadow */
+}
+
+/* Animation for better UX */
+.arxiv-modal-content {
+  transform-origin: center center;
+}
+
+.arxiv-progress-container {
+  transform-origin: bottom right;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .arxiv-modal-content {
+    border: 2px solid #000000;
+  }
+  
+  .arxiv-btn-primary {
+    background-color: #000000;
+    border: 2px solid #000000;
+  }
+  
+  .arxiv-btn-secondary {
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    color: #000000;
+  }
+}
